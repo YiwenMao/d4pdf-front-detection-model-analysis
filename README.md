@@ -2,45 +2,56 @@
 
 ## Overview
 
-This repository contains the source code used to develop, apply, and evaluate machine-learning models for detecting surface weather fronts and identifying Baiu-front days from d4PDF global climate model (GCM) simulations. It also includes analysis scripts used to calculate statistics, bootstrap uncertainty, and generate figures for the associated manuscript.
+This repository contains the source code used in the manuscript:
 
-The workflow includes:
+**Predicting the Spatiotemporal Evolution of Baiu Fronts under Climate Change by Machine Learning**
 
-1. development and evaluation of a U-Net model for frontal-location detection,
-2. development and evaluation of an XGBoost model for Baiu-front-day identification,
-3. application of the trained models to d4PDF experiments,
-4. generation of derived front datasets,
-5. statistical analysis of historical and future experiments, and
-6. production of manuscript figures.
+The code supports the development, evaluation, and application of machine-learning models used to detect the timing and spatial locations of Baiu fronts from historical observations, reanalysis data, and d4PDF global climate model (GCM) simulations.
+
+In this study, a U-shaped convolutional neural network (U-Net) is used to predict frontal locations, and an extreme gradient boosting (XGBoost) model is used to predict the timing of Baiu fronts. The trained models are then applied to past and future d4PDF experiments to investigate how the temporal and spatial evolution of Baiu fronts may change under climate warming.
 
 ## Related manuscript
 
-This repository supports the manuscript:
+**Title:** Predicting the Spatiotemporal Evolution of Baiu Fronts under Climate Change by Machine Learning  
+**Authors:** Yiwen Mao, Tomohito J. Yamada  
+**Affiliation:** Department of Engineering, Hokkaido University  
+**Journal:** Earth's Future (AGU)  
+**Corresponding author:** Yiwen Mao (ymaopanda@eng.hokudai.ac.jp)
 
-**[Insert manuscript title here]**
+## Scientific summary
 
-Submitted to **Earth's Future (AGU)**.
+Baiu fronts are quasi-stationary, zonally oriented frontal zones that often bring extreme rainfall as they move from south to north during summer in East Asia. Their occurrence is intermittent and highly variable in both time and space.
 
-## Authors
+This repository contains the code used to develop AI-based front-detection models and apply them to d4PDF GCM simulations under historical and future climate conditions. The associated manuscript shows that days with Baiu fronts tend to increase overall in a warmer climate, by up to about one week during JJA, but the changes vary substantially by month, region, and warming level.
 
-- Yiwen Mao, Hokkaido University
-- Tomohito J. Yamada, Hokkaido University
+The study suggests that under stronger warming, Baiu-front days tend to decrease between 30°N and 40°N and increase south of 30°N in June and July, while under moderate warming, front days generally increase south of 40°N in July. August shows a small increase in front days in both warming scenarios, suggesting a slightly longer rainy period.
+
+## Key points
+
+- Machine learning models trained using historical observations and reanalysis data are used to automatically detect Baiu fronts.
+- The trained models are applied to detect Baiu fronts in past and future d4PDF GCM experiments.
+- Days with Baiu fronts tend to increase both temporally and spatially, but strong regional and monthly variability is expected.
 
 ## Purpose of this repository
 
-The code in this repository is provided to support transparency, peer review, and reproducibility of the analysis presented in the manuscript. It includes scripts for model development, prediction, evaluation, and downstream climate analysis based on d4PDF simulations.
+This repository is intended to support transparency, reproducibility, and peer review of the analysis presented in the manuscript. It includes scripts for:
+
+- development of the U-Net and XGBoost models,
+- model evaluation,
+- application of trained models to d4PDF simulations,
+- generation of Baiu-front and non-Baiu-front datasets,
+- bootstrap and multimodel statistical analysis,
+- and production of manuscript figures.
 
 ## Repository contents
 
-The repository contains Python scripts for the following main tasks:
-
-### 1. Model development and evaluation
+### Model development and evaluation
 
 - `develop_model1_unet.py`  
-  Develops model 1, the U-Net model used to detect frontal locations.
+  Script used to develop model 1 (U-Net) for frontal-location detection.
 
 - `evaluate_unet.py`  
-  Evaluates the U-Net model using F1 score, Cohen's kappa, and Matthews correlation coefficient (MCC); used to produce Fig. 2(a–f).
+  Calculates F1 score, Cohen's kappa, and Matthews correlation coefficient (MCC) to evaluate the U-Net model; used to produce Fig. 2(a–f).
 
 - `evaluate_unet_additional.py`  
   Calculates additional evaluation metrics, including CSI, POD, SR, and bias; used to produce Figs. S7–S8.
@@ -51,18 +62,18 @@ The repository contains Python scripts for the following main tasks:
 - `XGBoost_predictors.py`  
   Calculates the XGBoost predictors described in Text S3 from ERA5 data.
 
-### 2. Application of trained models to d4PDF data
+### Application of trained models
 
 - `apply_model1.py`  
-  Applies the trained U-Net model to d4PDF GCM output to obtain locations of fronts.
+  Applies the trained U-Net model to d4PDF GCM simulations to obtain frontal locations.
 
 - `apply_model2.py`  
   Applies the trained XGBoost model to identify Baiu-front days and collect the spatial locations of all Baiu fronts.
 
 - `HPB_get_monFt.py`  
-  Extracts temporal-spatial datasets for Baiu-front and non-Baiu-front conditions in June, July, and August for historical experiments.
+  Extracts temporal-spatial datasets for Baiu-front and non-Baiu-front conditions in June, July, and August for use in subsequent analysis.
 
-### 3. Bootstrap and frequency analysis
+### Bootstrap and frequency analysis
 
 - `bootstrap_HFB_bft_rfreq.py`  
   Calculates relative frequency for 10,000 bootstrapped samples for various HFB scenarios; used in later analysis for Fig. 4.
@@ -71,18 +82,18 @@ The repository contains Python scripts for the following main tasks:
   Calculates relative frequency for 10,000 bootstrapped samples for HPB scenarios; used in later analysis for Fig. 4.
 
 - `bstrp_compare.py`  
-  Performs bootstrap resampling of all available years with replacement 10,000 times from historical climate (HPB) and future climate (HFB 2K/4K under SST warming scenarios CC, GF, HA, MI, MP, MR), and calculates differences in statistics between HPB and each HFB scenario for each bootstrap sample.
+  Resamples all available years with replacement 10,000 times from historical climate (HPB) and future climate (HFB 2K/4K under SST warming scenarios CC, GF, HA, MI, MP, MR), and calculates differences in statistics for each bootstrap sample.
 
 - `plot_rel_freq.py`  
-  Calculates relative frequency of Baiu fronts, defined as the ratio of the number of Baiu fronts occurring on a date in JJA to the total number of years used for prediction, using HPB and multimodel means of HFB 2K and 4K scenarios.
+  Calculates the relative frequency of Baiu fronts, defined as the ratio of the number of Baiu fronts occurring on a date in JJA to the total number of years used for prediction, based on HPB and multimodel means of HFB 2K and 4K scenarios.
 
-### 4. Historical vs future climate analysis
+### Historical vs future climate analysis
 
 - `HPBvsHFB_temporal.py`  
   Calculates bootstrap differences in the average number of Baiu-front days in June, July, and August for HFB 2K/4K scenarios; used for Fig. 4(a–c).
 
 - `HPBvsHFB_mm_space.py`  
-  Calculates the multimodel mean spatial distribution of differences in the average number of Baiu-front days in JJA; used for Fig. 4(a, e).
+  Calculates the multimodel mean spatial distribution of differences in the average number of Baiu-front days in JJA.
 
 - `HPBvsHFB_mm_harmonic_anom.py`  
   Calculates the multimodel mean harmonic fitting and anomalies of vorticity and moisture flux convergence (MFC); used for Fig. 4(e–h).
@@ -99,7 +110,7 @@ The repository contains Python scripts for the following main tasks:
 - `HPBvsHFB_indm_space.py`  
   Calculates JJA spatial differences (HFB − HPB) for individual models; used for Fig. 9.
 
-### 5. Historical-climate diagnostics and plotting
+### Historical-climate diagnostics and plotting
 
 - `plot_hpb_boxplot.py`  
   Calculates the average number of Baiu-front days per month in JJA; used for Fig. 3c.
@@ -112,7 +123,7 @@ The repository contains Python scripts for the following main tasks:
 
 ## Experiments analyzed
 
-The scripts in this repository analyze historical and future d4PDF experiments, including:
+This repository includes analysis of the following d4PDF experiments:
 
 - HPB
 - HFB 2K CC
@@ -130,58 +141,41 @@ The scripts in this repository analyze historical and future d4PDF experiments, 
 
 ## Typical workflow
 
-A typical analysis workflow is:
+A typical workflow is:
 
-1. Calculate ERA5-based predictors for XGBoost using `XGBoost_predictors.py`
-2. Develop and evaluate the U-Net model using:
-   - `develop_model1_unet.py`
-   - `evaluate_unet.py`
-   - `evaluate_unet_additional.py`
-3. Develop and evaluate the XGBoost model using:
-   - `develop_evaluate_model2_xgboost.py`
-4. Apply the trained models to d4PDF simulations using:
-   - `apply_model1.py`
-   - `apply_model2.py`
-5. Generate temporal-spatial frontal datasets using:
-   - `HPB_get_monFt.py`
-6. Perform bootstrap and climate-change analyses using:
-   - `bootstrap_HPB_bft_rfreq.py`
-   - `bootstrap_HFB_bft_rfreq.py`
-   - `bstrp_compare.py`
-   - `HPBvsHFB_temporal.py`
-   - `HPBvsHFB_mm_space.py`
-   - `HPBvsHFB_mm_harmonic_anom.py`
-   - `HPBvsHFB_ind_anom.py`
-   - `HPBvsHFB_ind_harmonic.py`
-   - `HPBvsHFB_indm_space_month.py`
-   - `HPBvsHFB_indm_space.py`
-7. Produce manuscript figures using the plotting scripts.
+1. Prepare ERA5-based predictors for XGBoost using `XGBoost_predictors.py`
+2. Develop the frontal-location model using `develop_model1_unet.py`
+3. Evaluate the U-Net model using `evaluate_unet.py` and `evaluate_unet_additional.py`
+4. Develop and evaluate the Baiu-day classifier using `develop_evaluate_model2_xgboost.py`
+5. Apply the trained models to d4PDF simulations using `apply_model1.py` and `apply_model2.py`
+6. Build temporal-spatial front datasets using `HPB_get_monFt.py`
+7. Perform bootstrap and climate-change analyses using the bootstrap and `HPBvsHFB_*` scripts
+8. Generate manuscript figures using the corresponding plotting scripts
 
 ## Data requirements
 
-These scripts depend on external datasets and intermediate files, including model output and reanalysis-derived products. Depending on the script, required inputs may include:
+The scripts depend on external datasets and intermediate files, which may include:
 
 - d4PDF GCM outputs
-- ERA5-derived predictors
+- ERA5-based predictors
 - trained machine-learning model files
-- intermediate MATLAB or NetCDF files
-- bootstrap outputs and derived analysis products
+- MATLAB intermediate files
+- NetCDF analysis products
+- derived bootstrap outputs
 
-Because some data files may be too large or subject to separate archive policies, they may not be included directly in this repository. Please refer to the manuscript and associated archived datasets for access details or request them directly from the authors via email
+These data may not all be included in this repository. Users should refer to the manuscript data/software availability statements and associated archived datasets for access details.
 
 ## Software requirements
 
-This repository contains Python scripts.
-
-Typical scientific Python dependencies may include:
+This project uses Python and scientific Python libraries. Depending on the workflow stage, required packages may include:
 
 - numpy
 - pandas
 - scipy
+- xarray
 - matplotlib
 
-Machine-learning scripts may additionally require packages used for:
-
+Additional machine-learning dependencies may be required for:
 - tensorflow
 - keras
 - xgboost
