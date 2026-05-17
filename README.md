@@ -10,6 +10,8 @@ The code supports the development, evaluation, and application of machine-learni
 
 In this study, a U-shaped convolutional neural network (U-Net) is used to predict frontal locations, and an extreme gradient boosting (XGBoost) model is used to predict the timing of Baiu fronts. The trained models are then applied to past and future d4PDF experiments to investigate how the temporal and spatial evolution of Baiu fronts may change under climate warming.
 
+The repository is intended to **document and demonstrate the analysis workflow** described in the paper, not to serve as a turnkey reproduction package. The raw input data are too large to host on GitHub and are obtained from third-party sources (see "Data" below and Section 2.1 of the manuscript).
+
 ## Related manuscript
 
 **Title:** Predicting the Spatiotemporal Evolution of Baiu Fronts under Climate Change by Machine Learning  
