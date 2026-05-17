@@ -165,7 +165,7 @@ The scripts depend on external datasets and intermediate files, which may includ
 - NetCDF analysis products
 - derived bootstrap outputs
 
-These data may not all be included in this repository. Users should refer to the manuscript data/software availability statements and associated archived datasets for access details.
+These data are not included in this repository. Users should refer to the manuscript data/software availability statements and associated archived datasets for access details.
 
 ## Software requirements
 
