@@ -60,7 +60,7 @@ def unet_model(input_shape, num_classes=2,nft=32,l2_reg=0.0001):
     conv3 = layers.Conv2D(nft*4, (3, 3), activation='relu', padding='same',kernel_regularizer=reg)(pool2)
     conv3 = layers.Conv2D(nft*4, (3, 3), activation='relu', padding='same',kernel_regularizer=reg)(conv3)
 
-    #Dropout(0.2)
+    Dropout(0.2)
     # Decoder (Upsampling)
     up1 = layers.Conv2DTranspose(nft*2, (2, 2), strides=(2, 2), padding='same')(conv3)
     concat1 = layers.Concatenate()([up1, conv2])
